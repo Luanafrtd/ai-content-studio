@@ -43,7 +43,6 @@ export function LoginForm() {
     }
 
     router.push(callbackUrl);
-    router.refresh();
   };
 
   const onSubmit = async (values: LoginInput) => {
