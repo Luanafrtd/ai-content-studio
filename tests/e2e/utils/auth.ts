@@ -15,3 +15,16 @@ export async function loginWithCredentials(page: Page, email: string, password: 
   await page.getByLabel("Password").fill(password);
   await page.getByRole("button", { name: "Sign in" }).click();
 }
+
+export async function registerUser(
+  page: Page,
+  { name, email, password }: { name: string; email: string; password: string },
+) {
+  await page.goto("/register");
+  await page.getByLabel("Name").fill(name);
+  await page.getByLabel("Email").fill(email);
+  await page.getByLabel("Password", { exact: true }).fill(password);
+  await page.getByLabel("Confirm password").fill(password);
+  await page.getByRole("button", { name: "Create account" }).click();
+  await page.waitForURL("**/dashboard");
+}

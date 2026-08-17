@@ -43,6 +43,8 @@ Server Components fetch initial data directly through Prisma; Client Components 
 
 **A deliberate asymmetry — title generation is never a second billed call.** Every provider's `generateTitle` uses the same local heuristic (derived from the mock generator's title logic), not a real model call, even when Anthropic or OpenAI is active. Real title generation would mean either a second API call per generation (double the cost and latency for something cosmetic) or awkwardly parsing a title out of the first streamed chunk. I chose "cheap and instant" over "technically AI-generated" for a field the user barely looks at before the body finishes streaming anyway.
 
+**Honest gap this design left, and how it's covered:** the mock provider is exercised constantly (every test, every demo run), but the real Anthropic/OpenAI providers were, for a while, pure interface-conformance code — never actually run against the live APIs, so the streaming-chunk parsing (`event.delta.type === "text_delta"` for Anthropic, `chunk.choices[0]?.delta?.content` for OpenAI) was unverified against real response shapes. `scripts/verify-ai-provider.ts` and `tests/integration/ai-providers.integration.test.ts` (run via `npm run test:integration`, skipped automatically without a key) now exist specifically to close that gap — they make real calls and assert on real streamed output, separate from the always-on mock-backed suite.
+
 ### Streaming: hand-rolled NDJSON over `fetch`, not Server-Sent Events
 
 **Decision:** `POST /api/generate` returns a `ReadableStream` of newline-delimited JSON events (`{"type":"title",...}`, `{"type":"chunk",...}`, `{"type":"done","id":...}`), read on the client with `response.body.getReader()` in `src/hooks/use-generate.ts`, not the browser's native `EventSource`.
@@ -61,11 +63,15 @@ Server Components fetch initial data directly through Prisma; Client Components 
 
 Same reasoning and the same cold-start trick as I'd use on any zero-config demo: SQLite locally and by default in production, with `src/lib/prisma.ts` copying a committed, pre-seeded snapshot (`prisma/prod-seed.db`) into Vercel's writable `/tmp` on cold start (`bootstrapProductionDatabase()`, gated on the `DATABASE_URL` actually pointing at `file:/tmp/...`). Writes are real and persist for the life of a warm Lambda instance, then reset on the next cold start — an intentional, disclosed tradeoff, not a hidden limitation. `next.config.ts` declares `outputFileTracingIncludes` for the snapshot file because Vercel's static file tracer can't see a `path.join()`-constructed path at build time and would otherwise drop it from the deployment bundle. Point `DATABASE_URL` at real Postgres and change one line in `prisma/schema.prisma` (`provider = "sqlite"` → `"postgresql"`) for genuine persistence — `bootstrapProductionDatabase()` no-ops immediately in that case.
 
-### Rate limiting: in-memory, and deliberately not more than that
+### Rate limiting: started in-memory, fixed once I was honest about what that meant in production
 
-**Decision:** `checkRateLimit()` (`src/lib/ai/rate-limiter.ts`) is a plain in-memory `Map`, 30 generations/hour per user, no Redis.
+**Original decision:** ship `checkRateLimit()` as a plain in-memory `Map`, 30 generations/hour per user, no Redis — framed at the time as "correct for a single serverless instance, and the first thing to swap for Redis once there's more than one."
 
-**Why:** The mock provider is free, so the actual risk this guards against is someone plugging in their own real API key and then getting hammered by scripted requests — a real but modest threat for a portfolio deployment. A `Map` is correct for a single serverless instance and silently stops being correct the moment there's more than one (each instance gets its own counter). That's the honest tradeoff: documented here rather than hidden, and the first thing I'd swap for Upstash Redis or similar if this were a real multi-instance deployment.
+**Why that framing undersold the problem:** on Vercel, "one instance" isn't a stable, long-lived thing the way it is on a traditional server — cold starts happen routinely under normal, low-traffic use, not just under horizontal scale-out. A fresh cold start means a fresh, empty `Map`. In the environment this app actually deploys to, an in-memory limiter is closer to "works between some pairs of consecutive requests" than "enforces 30/hour." I'd described the tradeoff honestly but hadn't fully reasoned through how weak it was in the specific deployment target I was already shipping to.
+
+**Fix:** `checkRateLimit()` now checks for `UPSTASH_REDIS_REST_URL`/`UPSTASH_REDIS_REST_TOKEN` and, if present, uses `@upstash/ratelimit`'s sliding-window limiter against real Redis — a counter that persists across cold starts and is shared across every instance, because it isn't in process memory at all. If those env vars aren't set, it falls back to the original in-memory limiter rather than failing open, so local dev and any fork of this repo keep working with zero setup — the same "mock/fallback by default, real when configured" shape as the AI provider factory. The one caller (`/api/generate`) didn't need to change beyond `await`-ing a call that's now inherently async (a Redis check is a network round trip; the in-memory path could stay synchronous, but a uniform async signature keeps both paths behind one interface).
+
+Both paths are covered in `tests/unit/rate-limiter.test.ts` — the in-memory path with the original behavioral tests, the Redis path by mocking `@upstash/ratelimit` and asserting the wrapper correctly maps its `{ success, reset }` result to this project's `{ allowed, retryAfterSeconds }` shape.
 
 ### A real bug I hit: Radix `ScrollArea` inside a flex-column dialog
 
@@ -95,6 +101,6 @@ Installing `@tanstack/react-table` with no version pin resolved to v9 — which 
 
 1. **Postgres by default, not SQLite** — the live demo's per-cold-start data reset is a fine tradeoff for a portfolio piece, not one I'd accept for a real product.
 2. **A real (rate-limited, cached) title call to the active model** when a real provider is configured, instead of always using the local heuristic — worth the extra latency once cost isn't the binding constraint.
-3. **Redis-backed rate limiting** the moment this runs on more than one instance.
+3. **Rate limiting on `/api/auth/register` itself** — generation is now protected by a real distributed limiter, but signup has none, no email verification, and no CAPTCHA. Combined with a self-service signup flow, that's an open door for scripted account creation that the generation-side fix doesn't address.
 4. **Prompt templates per content type**, editable by the user, instead of the fixed system prompt in `src/lib/ai/prompt.ts` — real products let you tune the house style.
 5. **Export** (Markdown/plain text download, copy-as-HTML) — copy-to-clipboard exists today; a real content tool needs more ways to get work out of it.

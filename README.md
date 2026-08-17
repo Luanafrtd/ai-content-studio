@@ -108,6 +108,14 @@ OPENAI_API_KEY="sk-..."
 
 Anthropic takes priority if both are set. See [`src/lib/ai/index.ts`](./src/lib/ai/index.ts).
 
+To verify a real provider actually works end to end (streams real content, not just that the code compiles):
+
+```bash
+ANTHROPIC_API_KEY="sk-ant-..." npx tsx scripts/verify-ai-provider.ts
+```
+
+Or run `npm run test:integration` — real, network-hitting tests against whichever key is set, skipped entirely (exit 0) when neither key is present, so this never runs in CI or for anyone without their own key.
+
 ## Available scripts
 
 | Script | Description |
@@ -120,6 +128,7 @@ Anthropic takes priority if both are set. See [`src/lib/ai/index.ts`](./src/lib/
 | `npm run format` / `format:check` | Prettier |
 | `npm run test` / `test:watch` / `test:coverage` | Vitest unit tests |
 | `npm run test:e2e` | Playwright end-to-end tests |
+| `npm run test:integration` | Real Anthropic/OpenAI API tests — requires your own key, skipped otherwise |
 | `npm run db:push` | Sync the Prisma schema to the database |
 | `npm run db:seed` | Seed realistic demo data |
 | `npm run db:reset` | Force-reset the schema and reseed (destructive, local only) |
@@ -181,6 +190,7 @@ This repo deploys to [Vercel](https://vercel.com) out of the box:
 | `NEXTAUTH_URL` | `http://localhost:3000` | your production URL |
 | `NEXT_PUBLIC_SITE_URL` | optional, defaults to `http://localhost:3000` | your production URL — used for `metadataBase` (canonical/OG URLs) |
 | `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` | optional | optional — unlocks real AI generation |
+| `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` | optional | optional — switches the generation rate limiter from in-memory to a real distributed limiter (see below) |
 
 ### About the SQLite deployment
 
@@ -197,6 +207,10 @@ That's a deliberate, honest tradeoff for a demo deployment, not a limitation of 
 ```
 
 No application code changes are required — every query goes through Prisma. See [CASE_STUDY.md](./CASE_STUDY.md#data-layer-prisma--sqlite-one-line-from-postgres) for the full reasoning.
+
+### About rate limiting
+
+`/api/generate` is rate-limited to 30 requests/hour/user. By default that's enforced with an in-memory counter, which works locally but is per-instance on Vercel serverless — it doesn't hold up across cold starts or multiple concurrent instances. Add an Upstash Redis database (Vercel → your project → Storage tab → free tier) and set `UPSTASH_REDIS_REST_URL`/`UPSTASH_REDIS_REST_TOKEN` to switch to a real sliding-window limiter backed by Redis, with no code changes — see [`src/lib/ai/rate-limiter.ts`](./src/lib/ai/rate-limiter.ts).
 
 ## Accessibility
 

@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     });
     if (!project) throw new ApiError(404, "Project not found");
 
-    const rateLimit = checkRateLimit(userId);
+    const rateLimit = await checkRateLimit(userId);
     if (!rateLimit.allowed) {
       const minutes = Math.max(1, Math.ceil((rateLimit.retryAfterSeconds ?? 60) / 60));
       throw new ApiError(429, `Generation limit reached. Try again in ${minutes} minute(s).`);
