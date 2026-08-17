@@ -1,0 +1,101 @@
+// Prisma schema for Quill — AI Content Studio.
+//
+// Default datasource is SQLite for a zero-config local/demo experience.
+// To run against Postgres in production, change `provider` below to
+// "postgresql" and point DATABASE_URL at a real database — no other
+// code changes are required. See README.md "Switching to Postgres".
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum ContentType {
+  BLOG_POST
+  SOCIAL_CAPTION
+  EMAIL
+  PRODUCT_DESCRIPTION
+  AD_COPY
+  SEO_META
+  PRESS_RELEASE
+}
+
+enum ContentTone {
+  PROFESSIONAL
+  FRIENDLY
+  PERSUASIVE
+  PLAYFUL
+  AUTHORITATIVE
+}
+
+enum ContentLength {
+  SHORT
+  MEDIUM
+  LONG
+}
+
+enum ContentStatus {
+  DRAFT
+  COMPLETE
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  avatarUrl    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  projects     Project[]
+  contentItems ContentItem[]
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  color       String   @default("teal")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  contentItems ContentItem[]
+
+  @@index([userId])
+}
+
+model ContentItem {
+  id          String        @id @default(cuid())
+  type        ContentType
+  title       String
+  prompt      String
+  tone        ContentTone   @default(PROFESSIONAL)
+  length      ContentLength @default(MEDIUM)
+  content     String
+  isFavorite  Boolean       @default(false)
+  status      ContentStatus @default(COMPLETE)
+  provider    String        @default("mock")
+  model       String        @default("quill-mock-v1")
+  tokensUsed  Int           @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([projectId])
+  @@index([type])
+  @@index([isFavorite])
+}

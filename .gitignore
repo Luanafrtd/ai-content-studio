@@ -39,3 +39,19 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# prisma / sqlite
+/prisma/*.db
+/prisma/*.db-journal
+# ...except the committed, pre-seeded snapshot used to bootstrap the
+# read-only Vercel production filesystem — see src/lib/prisma.ts
+!/prisma/prod-seed.db
+
+# testing
+/playwright-report
+/test-results
+/blob-report
+lighthouse-report.json
+
+# env — keep an example checked in
+!.env.example

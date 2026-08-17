@@ -1,0 +1,9 @@
+.next
+node_modules
+coverage
+playwright-report
+test-results
+prisma/dev.db
+public
+CASE_STUDY.md
+README.md
