@@ -21,6 +21,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - run: npm install -g npm@11.17.0
       - run: npm ci
       - run: npx prisma generate
       - run: npm run lint
@@ -36,6 +37,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - run: npm install -g npm@11.17.0
       - run: npm ci
       - run: npx prisma generate
       - run: npm run test
@@ -50,6 +52,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - run: npm install -g npm@11.17.0
       - run: npm ci
       - run: npx prisma db push
       - run: npm run build
@@ -64,6 +67,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - run: npm install -g npm@11.17.0
       - run: npm ci
       - run: npx prisma generate
       - name: Cache Playwright browsers

@@ -9,7 +9,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-[Live demo](https://ai-content-studio.vercel.app) · [Case study](./CASE_STUDY.md) · [Report an issue](https://github.com/Luanafrtd/ai-content-studio/issues)
+[Live demo](https://ai-content-studio-kohl.vercel.app) · [Case study](./CASE_STUDY.md) · [Report an issue](https://github.com/Luanafrtd/ai-content-studio/issues)
 
 </div>
 

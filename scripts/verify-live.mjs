@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const outDir = path.join(__dirname, "..", "docs", "screenshots");
 mkdirSync(outDir, { recursive: true });
 
-const baseURL = process.argv[2] ?? "https://ai-content-studio.vercel.app";
+const baseURL = process.argv[2] ?? "https://ai-content-studio-kohl.vercel.app";
 
 async function main() {
   const browser = await chromium.launch();
