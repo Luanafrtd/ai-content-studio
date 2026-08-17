@@ -179,6 +179,7 @@ This repo deploys to [Vercel](https://vercel.com) out of the box:
 | `DATABASE_URL` | `file:./dev.db` | `file:/tmp/dev.db` (see below) or a Postgres connection string |
 | `AUTH_SECRET` | any string (`npx auth secret`) | a strong secret |
 | `NEXTAUTH_URL` | `http://localhost:3000` | your production URL |
+| `NEXT_PUBLIC_SITE_URL` | optional, defaults to `http://localhost:3000` | your production URL — used for `metadataBase` (canonical/OG URLs) |
 | `ANTHROPIC_API_KEY` / `OPENAI_API_KEY` | optional | optional — unlocks real AI generation |
 
 ### About the SQLite deployment
