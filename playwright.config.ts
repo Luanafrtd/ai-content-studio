@@ -11,6 +11,10 @@ export default defineConfig({
   workers: 1,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
+  // CI runners are slower than local hardware, and `next dev`'s on-demand
+  // route compilation means the first test to hit a given route pays a
+  // one-time cold-compile cost on top of the interaction itself.
+  timeout: process.env.CI ? 60_000 : 30_000,
   reporter: [["html", { open: "never" }]],
   globalSetup: "./tests/e2e/global-setup.ts",
   use: {
