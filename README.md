@@ -216,6 +216,14 @@ No application code changes are required — every query goes through Prisma. Se
 
 Built to WCAG AA: semantic landmarks and heading structure, labeled form fields with inline `role="alert"` errors, visible focus rings, a skip-to-content link, and screen-reader-only text summaries for every chart. The live-streaming generation output is a single `aria-live="polite"` region, so a screen reader announces the finished result rather than firing on every ~20ms text chunk. The template gallery is a real `radiogroup`, fully operable by keyboard.
 
+## My Role
+
+I designed and built Quill end to end as a solo portfolio project — product scope, UI/UX (including the streaming generation interface and its accessibility treatment), and the full-stack implementation: the pluggable AI-provider architecture, data model, API routes, auth, and the test suite.
+
+## What I Learned
+
+Making the streaming output a single `aria-live="polite"` region rather than announcing every token was the sharpest accessibility lesson — the naive approach technically satisfies "announce updates" while making the page unusable with a screen reader on. On the product side, building rate limiting that's honest about its own limits (in-memory works locally, falls over across serverless instances) mattered more than making it *look* production-ready; the README says so directly instead of hiding it. With more time, self-service signup is the gap I'd close first — there's currently no rate limiting or verification on `/api/auth/register` itself.
+
 ## License
 
 MIT — this is a portfolio project, not a production product. Feel free to use it as a reference or starting point.
