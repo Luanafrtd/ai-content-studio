@@ -2,20 +2,20 @@
 
 # Quill
 
-**An AI content studio: generate, organize, and review on-brand marketing copy, with a live-streaming AI interface and zero-cost demo deployment.**
+**A first draft in seconds for anyone tired of the blank page, kept organized enough to actually find again.**
 
-[![CI](https://github.com/Luanafrtd/ai-content-studio/actions/workflows/ci.yml/badge.svg)](https://github.com/Luanafrtd/ai-content-studio/actions/workflows/ci.yml)
+[![CI](https://github.com/Luanafrtd/quill/actions/workflows/ci.yml/badge.svg)](https://github.com/Luanafrtd/quill/actions/workflows/ci.yml)
 ![Next.js](https://img.shields.io/badge/Next.js-15-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-[Live demo](https://ai-content-studio-kohl.vercel.app) · [Case study](./CASE_STUDY.md) · [Report an issue](https://github.com/Luanafrtd/ai-content-studio/issues)
+[Live demo](https://ai-content-studio-kohl.vercel.app) · [Case study](./CASE_STUDY.md) · [Report an issue](https://github.com/Luanafrtd/quill/issues)
 
 </div>
 
 ---
 
-Quill is a portfolio project built to look, feel, and behave like a real SaaS product, not a scaffold. It's a full AI content studio with authentication, protected routes, project-based organization, a live-streaming AI generation interface, searchable history, favorites, and an analytics dashboard, backed by a real database and covered by automated tests.
+Writing marketing copy usually starts at a blank page and ends with the good draft buried in a doc, a chat thread, or a folder of half-finished ideas. Quill is built for marketers, freelance copywriters, and small teams who write this copy regularly and need both a fast first draft and a place that copy actually lives afterward: project-based organization, full-text search, and favorites, so the version from three weeks ago is still findable. Generation streams live from a pluggable AI provider (mock by default, a real model behind one environment variable), backed by real authentication, a real database, and automated tests.
 
 > **Try it instantly:** click **"Try the demo (one click)"** on the sign-in screen, or sign up for your own free account. No API key, no billing, no setup: generation runs on a built-in mock AI provider by default.
 
@@ -39,7 +39,7 @@ Quill is a portfolio project built to look, feel, and behave like a real SaaS pr
 
 ## Features
 
-- **AI-powered generation:** seven content types (blog post, social caption, email, product description, ad copy, SEO meta, press release), streamed live token-by-token from a single prompt
+- **A draft from one prompt:** seven content types (blog post, social caption, email, product description, ad copy, SEO meta, press release), streamed live token-by-token so you're reading it as it's written
 - **Zero-cost by default:** a deterministic mock AI provider ships as the default, so the app runs and demos fully with **no API key required**; set `ANTHROPIC_API_KEY` or `OPENAI_API_KEY` to switch live generation over to a real model with no code changes
 - **Authentication:** self-service email/password signup via Auth.js (Credentials provider), plus a seeded, one-click demo account
 - **Route protection:** Edge middleware guards every `/dashboard/*` route and redirects back to the original destination after login
@@ -82,8 +82,8 @@ See [CASE_STUDY.md](./CASE_STUDY.md) for the reasoning behind each of these choi
 ### Setup
 
 ```bash
-git clone https://github.com/Luanafrtd/ai-content-studio.git
-cd ai-content-studio
+git clone https://github.com/Luanafrtd/quill.git
+cd quill
 npm install
 cp .env.example .env
 npx auth secret   # writes a fresh AUTH_SECRET into .env
@@ -226,4 +226,4 @@ Making the streaming output a single `aria-live="polite"` region rather than ann
 
 ## License
 
-MIT. This is a portfolio project, not a production product. Feel free to use it as a reference or starting point.
+MIT. Feel free to use this as a reference or a starting point.
