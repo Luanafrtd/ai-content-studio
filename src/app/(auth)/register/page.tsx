@@ -53,8 +53,8 @@ export default function RegisterPage() {
             Seven content types. One consistent voice.
           </h2>
           <p className="mt-3 max-w-sm text-sm text-white/80">
-            Pick a template, describe what you need, and watch it write itself, organized by
-            project from day one.
+            Pick a template, describe what you need, and watch it write itself, organized by project
+            from day one.
           </p>
         </div>
 
