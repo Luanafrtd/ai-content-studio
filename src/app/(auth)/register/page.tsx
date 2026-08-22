@@ -27,14 +27,14 @@ export default function RegisterPage() {
           <div className="mb-8 space-y-1.5">
             <h1 className="text-2xl font-semibold tracking-tight">Create your account</h1>
             <p className="text-muted-foreground text-sm">
-              Start generating on-brand content in minutes — no credit card required.
+              Start generating on-brand content in minutes. No credit card required.
             </p>
           </div>
           <RegisterForm />
         </div>
 
         <p className="text-muted-foreground text-xs">
-          © {new Date().getFullYear()} Quill. A portfolio project — not a real product.
+          © {new Date().getFullYear()} Quill. A portfolio project, not a real product.
         </p>
       </div>
 
@@ -53,7 +53,7 @@ export default function RegisterPage() {
             Seven content types. One consistent voice.
           </h2>
           <p className="mt-3 max-w-sm text-sm text-white/80">
-            Pick a template, describe what you need, and watch it write itself — organized by
+            Pick a template, describe what you need, and watch it write itself, organized by
             project from day one.
           </p>
         </div>

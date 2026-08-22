@@ -24,7 +24,7 @@ test.describe("Route protection", () => {
     await page.goto("/dashboard/history");
     await page.waitForURL(/\/login/);
 
-    await page.getByRole("button", { name: "Try the demo — one click" }).click();
+    await page.getByRole("button", { name: "Try the demo (one click)" }).click();
 
     await page.waitForURL("**/dashboard/history");
     await expect(page.getByRole("heading", { name: "History", level: 2 })).toBeVisible();

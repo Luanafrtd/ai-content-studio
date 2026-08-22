@@ -5,7 +5,7 @@ export const DEMO_PASSWORD = "demo1234";
 
 export async function loginAsDemoUser(page: Page) {
   await page.goto("/login");
-  await page.getByRole("button", { name: "Try the demo — one click" }).click();
+  await page.getByRole("button", { name: "Try the demo (one click)" }).click();
   await page.waitForURL("**/dashboard");
 }
 

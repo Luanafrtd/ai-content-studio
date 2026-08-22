@@ -9,7 +9,7 @@ export default function DashboardPage() {
       <div>
         <h2 className="text-2xl font-semibold tracking-tight">Overview</h2>
         <p className="text-muted-foreground mt-1 text-sm">
-          Your content studio at a glance — volume, favorites, and what&apos;s fresh.
+          Your content studio at a glance: volume, favorites, and what&apos;s fresh.
         </p>
       </div>
       <DashboardOverview />

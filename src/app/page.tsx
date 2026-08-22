@@ -20,7 +20,7 @@ const features = [
     icon: Sparkles,
     title: "AI-powered generation",
     description:
-      "Blog posts, captions, emails, and four more formats — streamed live from a single prompt.",
+      "Blog posts, captions, emails, and four more formats. Streamed live from a single prompt.",
   },
   {
     icon: FolderKanban,
@@ -64,8 +64,8 @@ export default function LandingPage() {
               AI content, on brand, on demand.
             </h1>
             <p className="text-muted-foreground mt-4 max-w-lg text-lg text-pretty">
-              Quill turns a prompt into on-brand marketing copy — blog posts, social captions,
-              emails, ad copy, and more — organized by project, searchable, and measurable from day
+              Quill turns a prompt into on-brand marketing copy (blog posts, social captions,
+              emails, ad copy, and more), organized by project, searchable, and measurable from day
               one.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -80,7 +80,7 @@ export default function LandingPage() {
               </Button>
             </div>
             <p className="text-muted-foreground mt-4 text-sm">
-              Free to run — the live demo uses a built-in mock AI provider, no billing required.
+              Free to run: the live demo uses a built-in mock AI provider, no billing required.
             </p>
           </div>
           <div className="flex justify-center lg:justify-end">
@@ -95,7 +95,7 @@ export default function LandingPage() {
                 Everything a content team actually needs
               </h2>
               <p className="text-muted-foreground mt-3">
-                Not just a chat window — a studio built around organizing, reusing, and measuring
+                Not just a chat window: a studio built around organizing, reusing, and measuring
                 what you generate.
               </p>
             </div>
@@ -146,7 +146,7 @@ export default function LandingPage() {
         <section className="border-border/60 border-t">
           <div className="mx-auto max-w-3xl px-4 py-20 text-center sm:px-6">
             <h2 className="text-3xl font-semibold tracking-tight">
-              Try it now — it&apos;s already loaded with sample content.
+              Try it now: it&apos;s already loaded with sample content.
             </h2>
             <p className="text-muted-foreground mt-3">
               The one-click demo account comes preloaded with projects and generation history, so
@@ -171,7 +171,7 @@ export default function LandingPage() {
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-8 sm:flex-row sm:px-6">
           <Logo className="text-sm" />
           <p className="text-muted-foreground text-center text-xs sm:text-right">
-            © {new Date().getFullYear()} Quill. A portfolio project — not a real product.
+            © {new Date().getFullYear()} Quill. A portfolio project, not a real product.
           </p>
         </div>
       </footer>

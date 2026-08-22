@@ -73,7 +73,7 @@ export function LoginForm() {
         ) : (
           <Sparkles className="size-4" aria-hidden="true" />
         )}
-        Try the demo — one click
+        Try the demo (one click)
       </Button>
       <p className="text-muted-foreground text-center text-xs">
         Signs you in instantly to a workspace preloaded with sample projects and generations.

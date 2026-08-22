@@ -24,7 +24,7 @@ async function main() {
   await page.waitForTimeout(300);
   await page.screenshot({ path: path.join(outDir, "login.png") });
 
-  await page.getByRole("button", { name: "Try the demo — one click" }).click();
+  await page.getByRole("button", { name: "Try the demo (one click)" }).click();
   await page.waitForURL("**/dashboard", { timeout: 15000 });
   await page.waitForTimeout(600);
   await page.screenshot({ path: path.join(outDir, "dashboard.png") });

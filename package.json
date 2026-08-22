@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
-  "description": "Quill — an AI content studio for generating, organizing, and reviewing on-brand marketing copy, built with Next.js 15.",
+  "description": "Quill: an AI content studio for generating, organizing, and reviewing on-brand marketing copy, built with Next.js 15.",
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",

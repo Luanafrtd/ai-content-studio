@@ -14,7 +14,7 @@ const highlights = [
   {
     icon: Sparkles,
     title: "AI-powered generation",
-    description: "Blog posts, captions, emails, and more — streamed live from a prompt.",
+    description: "Blog posts, captions, emails, and more. Streamed live from a prompt.",
   },
   {
     icon: FolderKanban,
@@ -47,7 +47,7 @@ export default function LoginPage() {
         </div>
 
         <p className="text-muted-foreground text-xs">
-          © {new Date().getFullYear()} Quill. A portfolio project — not a real product.
+          © {new Date().getFullYear()} Quill. A portfolio project, not a real product.
         </p>
       </div>
 
@@ -66,7 +66,7 @@ export default function LoginPage() {
             Turn a prompt into on-brand content in seconds.
           </h2>
           <p className="mt-3 max-w-sm text-sm text-white/80">
-            One studio for every piece of marketing copy your team writes — organized, searchable,
+            One studio for every piece of marketing copy your team writes, organized, searchable,
             and reusable.
           </p>
         </div>

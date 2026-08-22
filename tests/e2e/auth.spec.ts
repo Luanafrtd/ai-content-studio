@@ -5,7 +5,7 @@ test.describe("Authentication", () => {
   test("shows the login page with a one-click demo option", async ({ page }) => {
     await page.goto("/login");
     await expect(page.getByRole("heading", { name: "Welcome back" })).toBeVisible();
-    await expect(page.getByRole("button", { name: "Try the demo — one click" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Try the demo (one click)" })).toBeVisible();
   });
 
   test("shows an error for invalid credentials", async ({ page }) => {

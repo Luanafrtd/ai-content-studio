@@ -21,11 +21,11 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Quill — AI Content, On Brand, On Demand",
+    default: "Quill: AI Content, On Brand, On Demand",
     template: "%s · Quill",
   },
   description:
-    "Quill is a modern, accessible AI content studio for generating, organizing, and reviewing on-brand marketing copy — blog posts, social captions, emails, ad copy, and more.",
+    "Quill is a modern, accessible AI content studio for generating, organizing, and reviewing on-brand marketing copy: blog posts, social captions, emails, ad copy, and more.",
   keywords: [
     "AI content generation",
     "SaaS",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Quill" }],
   openGraph: {
-    title: "Quill — AI Content, On Brand, On Demand",
+    title: "Quill: AI Content, On Brand, On Demand",
     description:
       "Generate, organize, and review on-brand marketing copy in one streamlined AI content studio.",
     url: siteUrl,
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Quill — AI Content, On Brand, On Demand",
+    title: "Quill: AI Content, On Brand, On Demand",
     description:
       "Generate, organize, and review on-brand marketing copy in one streamlined AI content studio.",
   },

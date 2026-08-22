@@ -20,7 +20,7 @@ async function main() {
   console.log("Login page title:", title);
   await page.screenshot({ path: path.join(outDir, "live-login.png") });
 
-  await page.getByRole("button", { name: "Try the demo — one click" }).click();
+  await page.getByRole("button", { name: "Try the demo (one click)" }).click();
   await page.waitForURL("**/dashboard", { timeout: 15000 });
   console.log("Logged in, reached:", page.url());
 

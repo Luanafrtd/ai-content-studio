@@ -1,7 +1,7 @@
 import type { GeneratedContent, GenerateParams } from "@/lib/ai/types";
 
 /**
- * A deterministic, template-driven "AI" — no network call, no key, no cost.
+ * A deterministic, template-driven "AI": no network call, no key, no cost.
  * Seeded from the request itself so the same prompt/type/tone/length always
  * produces the same output (useful for tests and for a stable demo), while
  * different inputs still read as genuinely different copy.
@@ -59,9 +59,9 @@ const TONE_OPENERS: Record<GenerateParams["tone"], string[]> = {
     "Organizations increasingly recognize that",
     "It's clear that",
   ],
-  FRIENDLY: ["Let's be honest —", "Here's the thing:", "You already know this, but"],
+  FRIENDLY: ["Let's be honest:", "Here's the thing:", "You already know this, but"],
   PERSUASIVE: [
-    "Don't just take our word for it —",
+    "Don't just take our word for it:",
     "Now more than ever,",
     "The results speak for themselves:",
   ],
@@ -78,8 +78,8 @@ const TONE_CLOSERS: Record<GenerateParams["tone"], string[]> = {
     "We're committed to delivering measurable results.",
     "Reach out to learn more about our approach.",
   ],
-  FRIENDLY: ["We'd love to hear what you think.", "Come say hi — we're always around."],
-  PERSUASIVE: ["Don't wait — get started today.", "The opportunity won't last forever."],
+  FRIENDLY: ["We'd love to hear what you think.", "Come say hi, we're always around."],
+  PERSUASIVE: ["Don't wait, get started today.", "The opportunity won't last forever."],
   PLAYFUL: ["That's it. That's the post.", "Go forth and do the thing."],
   AUTHORITATIVE: ["The evidence supports one conclusion.", "This is the standard going forward."],
 };
@@ -110,7 +110,7 @@ function buildParagraph(
   const fillers = [
     `It removes the guesswork, replacing scattered notes and one-off documents with a single, organized workflow.`,
     `Every detail is captured, searchable, and ready to reuse the next time it's needed.`,
-    `The difference shows up immediately — less time spent starting from a blank page, more time spent refining what matters.`,
+    `The difference shows up immediately: less time spent starting from a blank page, more time spent refining what matters.`,
     `Teams that adopt this approach consistently report faster turnaround and more consistent output.`,
     `Instead of reinventing the process each time, the pattern is captured once and reused everywhere.`,
   ];
@@ -156,7 +156,7 @@ function generateSocialCaption(rng: () => number, params: GenerateParams): Gener
   const subject = topic(params.prompt);
   const hook = pick(rng, [
     `${pick(rng, TONE_OPENERS[params.tone])} ${subject} just got a whole lot easier.`,
-    `We've been quietly working on ${subject} — here's the update.`,
+    `We've been quietly working on ${subject}, here's the update.`,
     `${titleCase(subject)}, reimagined.`,
   ]);
   const sentences = sizeFactor(params.length);
@@ -180,7 +180,7 @@ function generateEmail(rng: () => number, params: GenerateParams): GeneratedCont
   const subjectLine = titleCase(
     pick(rng, [
       `Introducing: ${subject}`,
-      `${subject} — here's what's new`,
+      `${subject}: here's what's new`,
       `A quick update on ${subject}`,
     ]),
   );
@@ -206,7 +206,7 @@ function generateProductDescription(rng: () => number, params: GenerateParams): 
     [
       "Thoughtful, intuitive design that gets out of your way",
       "Built to scale from a single user to an entire team",
-      "Fast setup — no training required",
+      "Fast setup, no training required",
       "Works with the tools you already use",
       "Backed by real support, not just documentation",
       "Continuously improved based on real usage",
